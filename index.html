@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Regity.io</title>
+  <style>
+        *{
+      padding: 0;
+      margin: 0;
+      font-family: monospace;
+    }
+    body{
+      background-color: #848EFF;
+    }
+    .head-nav{
+      border: 2px solid black;
+      padding: 10px;
+      position: fixed;
+      top: 0;
+      background-color: white;
+      width: 100vw;
+      z-index: 3;
+    }
+    .nav-btn{
+      border: 1px solid black;
+      padding: 7px;
+      width: 40px;
+      position: relative;
+      left: 55%;
+      
+      font-size: 17px;
+      font-weight: bold;
+      background-color: #FFFCAB;
+      outline: none;
+      box-shadow: 4px 4px #CFB2FA;
+    }
+    .nav-btn:active{
+      box-shadow: none;
+    }
+    #head-text{
+      display: inline;
+      text-shadow: 2px 2px #D4A4FF;
+      font-weight: bolder;
+   
+    }
+    .main{
+      border: 2px solid black;
+      padding: 10px;
+      width: 80%;
+      margin-left: 8%;
+      height: fit-content;
+      background-color: #E0E1F4;
+     
+      margin-top: 50%;
+    }
+    .aside{
+      border: 2px solid black;
+      width: 80%;
+      margin-left: 5%;
+      padding: 12px;
+      margin-top: 10px;
+      
+      background-color: white;
+    }
+    #field{
+      border: none;
+      width: 77%;
+      outline: none;
+      
+    }
+    ::placeholder{
+      color: black;
+      font-weight: 700;
+      font-family: monospace;
+    }
+    #btn{
+      border: 1px solid black;
+      padding: 10px;
+      
+      background-color: #FFD198;
+      font-weight: bold;
+      box-shadow: 2px 2px black;
+      outline: none;
+    }
+    #btn:active{
+      box-shadow: none;
+    }
+    .response{
+      border: 2px solid black;
+      width: 89%;
+      padding-top: 15px;
+      padding-bottom: 15px;
+      
+      margin-left: 5%;
+      margin-top: 5%;
+      height: fit-content;
+      max-height: 100%;
+      background-color: #B4F1D7;
+    }
+    .repo{
+      text-align: center;
+      font-family: monospace;
+      font-size: 17px;
+      font-weight: bold;
+      overflow-x: scroll;
+      
+    }
+    .error{
+      border: 2px solid black;
+      
+      background-color: #FFC5C5;
+      padding: 10px;
+      position: absolute;
+      top: 15%;
+      left: 6.5%;
+      width: 80%;
+      font-family: monospace;
+      font-weight: bold;
+      color: #590303;
+      visibility: hidden;
+    }
+    #show{
+      border: 1px solid black;
+      padding: 5px;
+      width: 30px;
+      
+      margin-left: 8%;
+      margin-top: 5%;
+      background-color: #00FF83;
+ 
+    }
+    #target{
+      border: 1px solid black;
+      padding: 10px;
+      width: 80%;
+      margin-left: 8%;
+      
+      background-color: #FFFEB0;
+      margin-bottom: 70%;
+      box-shadow: 2px 2px black;
+    }
+    #cancel{
+      border: 1px solid black;
+      width: 30px;
+      height: 30px;
+      
+      font-weight: bold;
+      background-color: #ADFFB9;
+      position: relative;
+      left: 57%;
+      box-shadow: 2px 2px black;
+    }
+    #cancel:active{
+      box-shadow: none;
+    }
+    #copy{
+      width: 40%;
+      padding: 10px;
+      border: 1px solid black;
+      background-color: #DCC6FF;
+      
+      margin-top: 14px;
+      margin-left: 30%;
+      box-shadow: 2px 2px black;
+      outline: none;
+      font-weight: bold;
+    }
+    #copy:active{
+      box-shadow: none;
+    }
+    #copy-alert{
+ 
+         border: 1px solid black;
+         
+         background-color: #CFACF1;
+         padding: 14px;
+         position: absolute;
+         top: 90%;
+         left: 6.5%;
+         width: 80%;
+         font-family: monospace;
+         font-weight: bold;
+         color: black;
+         visibility: hidden;
+    }
+    
+  </style>
+</head>
+
+<body>
+  <div class="head-nav">
+    <h1 id="head-text">REGITY</h1>
+    <button class="nav-btn">🌝</button>
+  </div>
+  <div class="error">
+    Empty input
+    <button id="cancel">X</button>
+  </div>
+  <div class="main">
+    <div class="aside">
+      <input type="text" placeholder="Enter text.." id="field">
+      <button id="btn">GO</button>
+    </div>
+    <div class="response">
+      <p class="repo">........</p>
+    </div>
+    <button onclick="copy()" id="copy">Copy 💾</button>
+  </div>
+  <br>
+  <button id="show">!!</button>
+  <p id="target">Generate any <b>regex</b> pattern for any string you can think of with a click of a <b>BUTTON</b>. So dont be fooled by its look. 🤖😏</p>
+  
+   <div id="copy-alert"></div>
+<script>function insert(value, index, array){
+      if(index >= array.length){
+        let newArr = array;
+        newArr.push(value);
+        return newArr;
+      }
+      
+      let ndx;
+      let newArray = [];
+      let inserted = false;
+      for(ndx=0; ndx != array.length; ndx++){
+        if(ndx == index){
+          newArray.push(value);
+          inserted = true;
+        }else{
+          if(inserted == false){
+          newArray.push(array[ndx]);
+          }else{
+            newArray.push(array[ndx-1]);
+          }
+        }
+      }
+      
+      newArray.push(array[array.length-1]);
+      return newArray;
+    }
+    
+    function check_upper_exists(string) {
+      var uppers = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.toUpperCase();
+      for (token of string) {
+        if (uppers.includes(token)) {
+          return true; //when upper
+        }
+      }
+      
+      return false; //no upper
+    }
+  
+    function generate(atr) {
+      let string = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ';
+      let numbers = '0123456789';
+      let symbols = ',.@#$_&-+()/\\?!;:*\<>~|•√π÷×¶∆}{=°^¥€`¢£"%©®™✓[]';
+  
+      let value = atr;
+      value = value.trim();
+      let temp = ' ';
+      let sep = [];
+  
+      for (token of value) {
+        
+        if (symbols.includes(token)) {
+          if (!symbols.includes(temp[temp.length - 1]) && temp != ' ') {
+            sep.push(temp);
+            temp = '';
+          }
+          temp += token;
+        }
+        else if (string.includes(token)) {
+          if (!string.includes(temp[temp.length - 1]) && temp != ' ') {
+            sep.push(temp);
+            temp = '';
+          }
+          temp += token;
+        }
+        else if (numbers.includes(token)) {
+          if (!numbers.includes(temp[temp.length - 1]) && temp != ' ') {
+            sep.push(temp);
+            temp = '';
+          }
+          temp += token;
+        }
+        
+        else{
+          temp+=token;
+        }
+      }
+      
+      sep.push(temp); //last value
+      sep[0] = sep[0].slice(1, sep[0].length+1);
+      
+      let count = 0;
+      while(count < sep.length){
+        if(sep[count].includes(' ')){
+          sep = insert('\\s', count+1, sep);
+          if(count+1 <= sep.length-1){
+            sep[count+1] = sep[count+1].trim();
+          }
+        }
+        count++;
+      }
+      
+      console.log(sep);
+      let regex_iter = ['^'];
+      for(item of sep){
+    
+        if(item == '\\s'){
+          regex_iter.push(item);
+          continue;
+        }
+        
+        if (symbols.includes(item[0])) {
+         
+          let unix = '(){}[].$+*!?/|^\\-<>';
+          let cleaned = '';
+          for (i of item) {
+            if (unix.includes(i)) {
+              let tt = `\\${i}`;
+              cleaned += tt;
+            } else {
+              cleaned += i;
+            }
+          }
+          
+          regex_iter.push(cleaned);
+        }
+        else if(string.includes(item[0])){
+          
+          if(item.length > 1){
+            if(item.toUpperCase() == item){
+              regex_iter.push('[A-Z]+');
+              continue;
+            }
+            if(check_upper_exists(item) == true){
+              regex_iter.push('[a-zA-Z]+');
+            }else{
+              regex_iter.push('[a-z]+')
+            }
+          }else{
+            if(item.toUpperCase() == item){
+              regex_iter.push('[A-Z]');
+              continue;
+            } else {
+              regex_iter.push('[a-z]');
+          }
+        }
+      } else if(numbers.includes(item[0])){
+        item = item.replace(/ /g, '');
+        if(item.length > 1){
+          let cal = `\\d{${item.length}}`;
+          regex_iter.push(cal);
+        }else{
+          regex_iter.push('\\d');
+        }
+      }}
+      regex_iter.push('$');
+      
+      return regex_iter.join('').replace(' ', ''); //Final cleaning removing inside spaces
+      
+    }
+    
+    
+    function copy() {
+ 
+      var copyField = document.querySelector('.repo');
+      let copyText = document.createElement('input');
+      copyText.value = copyField.innerText;
+      copyText.select();
+      copyText.setSelectionRange(0, 999999999);
+      navigator.clipboard.writeText(copyText.value);
+      let alertCopy = document.querySelector('#copy-alert');
+      alertCopy.style.visibility = 'visible';
+      alertCopy.innerHTML = `Copied ${copyText.value.slice(0, 20)}...`;
+  
+      let timeout = setTimeout(
+        function () {
+            document.querySelector('#copy-alert').style.visibility = 'hidden';
+        }, 2000);
+}
+
+    
+    //DOM Part
+   document.querySelector('#btn').onclick = function(){
+     let field = document.querySelector('#field').value;
+     if(field == ''){
+       document.querySelector('.error'). style.visibility = 'visible';
+     }else{
+       
+       document.querySelector('.error'). style.visibility = 'hidden';
+     let regex = generate(field);
+     document.querySelector('.repo').innerHTML = regex;
+     }
+   }
+   
+   document.querySelector('#cancel').onclick = function(){
+     document.querySelector('.error'). style.visibility = 'hidden';
+   }
+   
+   let theme = true;
+   document.querySelector('.nav-btn').onclick = function () {
+     if(theme == true){
+       document.querySelector('body').style.backgroundColor = '#1D1D1D';
+       this.style.backgroundColor = '#CFB2FA';
+       this.style.boxShadow = '4px 4px yellow';
+       this.innerText = '🌚';
+       theme = false;
+     }else{
+       document.querySelector('body').style.backgroundColor = '#848EFF';
+       this.innerText = '🌝';
+       this.style.backgroundColor = '#FFFCAB';
+       this.style.boxShadow = '4px 4px #CFB2FA';
+       theme = true;
+     }
+   }
+   </script>
+</body>
+
+</html>
